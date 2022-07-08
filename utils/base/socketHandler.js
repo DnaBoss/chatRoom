@@ -1,5 +1,5 @@
 const { io, server } = require('../../io/server');
-const PeerBase = require('./peerBase');
+const PeerBase = require('./peerbase');
 const PeerManager = require('./peerManager');
 
 class SocketHandler {

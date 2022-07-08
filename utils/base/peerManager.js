@@ -1,4 +1,4 @@
-const PeerBase = require('./peerBase');
+const PeerBase = require('./peerbase');
 
 class PeerManager {
 
