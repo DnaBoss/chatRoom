@@ -1,4 +1,5 @@
-{ 
-    "port":3310,
-    "defaultUpperBound":60
+{
+    "actionUpperBound": 5,
+    "limitMilliseconds": 5000,
+    "port": 3310
 }

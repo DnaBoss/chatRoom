@@ -1,11 +1,12 @@
-const PeerBase = require('./peerbase');
+const PeerBase = require('./peerBase');
 
 class PeerManager {
 
-    constructor() {
+    constructor(io) {
         this.socketDict = {};
         this._instance;
         this.socketLength = 0;
+        this.io = io;
     }
 
     /**
@@ -21,14 +22,14 @@ class PeerManager {
     /**
      *
      *
-     * @param {number} userId 
+     * @param {number} socketId 
      * @param {PeerBase} peer
      * @returns {PeerBase}
      * @memberof PeerBase
      */
-    addPeer(userId, peer) {
+    addPeer(socketId, peer) {
         // 直接覆蓋
-        this.socketDict[userId] = peer;
+        this.socketDict[socketId] = peer;
         this.socketLength++;
         return peer;
     }
@@ -36,39 +37,30 @@ class PeerManager {
     /**
      *
      *
-     * @param {number} userId
+     * @param {number} socketId
      * @returns {boolean}
      * @memberof PlayerManager
      */
-    removePeer(userId) {
-        if (this.socketDict[userId]) {
-            delete this.socketDict[userId];
-            this.socketLength++;
+    removePeer(socketId) {
+        if (this.socketDict[socketId]) {
+            delete this.socketDict[socketId];
+            this.socketLength--
         }
-        return userId in this.socketDict;
+        return socketId in this.socketDict;
     }
 
     /**
      *
      *
-     * @param {number} userId
+     * @param {number} socketId
      * @returns {PeerBase}
      * @memberof PlayerManager
      */
-    getPeer(userId) {
-        return this.socketDict[userId];
+    getPeer(socketId) {
+        return this.socketDict[socketId];
     }
 
-    /**
-     *
-     *
-     * @param {number} roomId
-     * @param {{ msg: string }} data
-     * @memberof PeerManager
-     */
-    sendToRoom(roomId, data) {
-        
-    }
+
 }
 
 module.exports = PeerManager;
