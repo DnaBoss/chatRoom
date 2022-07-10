@@ -1,5 +1,5 @@
 $(function () {
-    const socket = io("ws://lb-486731550.ap-southeast-1.elb.amazonaws.com:3310", { path: "/chat" });
+    const socket = io("ws://127.0.0.1:3310", { path: "/chat" });
     let name = null;
     $('.login-btn').click(function () {
         name = $.trim($('#loginName').val());
