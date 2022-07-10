@@ -60,7 +60,6 @@ class PeerManager {
             delete this.peers[socketId];
             this.socketLength--
         }
-        console.log(Object.keys(this.peers).length);
         return socketId in this.peers;
     }
 

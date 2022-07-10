@@ -3,7 +3,6 @@ $(function () {
     let name = null;
     $('.login-btn').click(function () {
         name = $.trim($('#loginName').val());
-        console.log('name = ', name)
         if (name) {
             socket.emit('login', { name })
         } else {
