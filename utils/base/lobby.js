@@ -8,13 +8,12 @@ class Lobby {
      * @param {PeerManager} peerManager
      * @memberof Lobby
      */
-    constructor(peerManager, io) {
+    constructor(peerManager) {
         this.peerManager = peerManager;
-        this.io = io;
     }
 
     static create() {
-        return new Lobby(PeerManager.getInstance(), io);
+        return new Lobby(PeerManager.getInstance(io));
     }
     /**
      *
@@ -59,8 +58,13 @@ class Lobby {
      */
     login(socketId, name) {
         const peer = this.peerManager.getPeer(socketId);
-        const data = { msg: name };
+        if (this.peerManager.isExistPeer(name)) {
+            return peer.sendIllegalName();
+        }
+        const data = { name };
         peer.login(data)
+        // peer.userJoin(data);
+        this.peerManager.userJoin(data);
     }
 
     /**
@@ -71,10 +75,11 @@ class Lobby {
      * @param {string} msg
      * @memberof Lobby
      */
-    chat(socketId, from, msg) {
+    sendMsg(socketId, msg) {
         const peer = this.peerManager.getPeer(socketId);
-        const data = { from, msg };
-        peer.chat(data);
+        const data = { from: peer.name, msg };
+        this.peerManager.sendMsg(data);
+        // peer.sendMsg(data);
     }
 
     /**
@@ -85,7 +90,7 @@ class Lobby {
      */
     sendIllegalMsg(socketId) {
         const peer = this.peerManager.getPeer(socketId);
-        peer.sendIllegalMsg(peer.userId);
+        peer.sendIllegalMsg(peer.name);
     }
 
     broadcast() {

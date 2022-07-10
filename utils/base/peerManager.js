@@ -1,9 +1,13 @@
 const PeerBase = require('./peerBase');
 
 class PeerManager {
-
+    /**
+     * Creates an instance of PeerManager.
+     * @param {*} io
+     * @memberof PeerManager
+     */
     constructor(io) {
-        this.socketDict = {};
+        this.peers = {};
         this._instance;
         this.socketLength = 0;
         this.io = io;
@@ -16,8 +20,18 @@ class PeerManager {
      * @returns {PeerManager}
      * @memberof PeerManager
      */
-    static getInstance() {
-        return this._instance = this._instance || new PeerManager();
+    static getInstance(io) {
+        return this._instance = this._instance || new PeerManager(io);
+    }
+
+    /**
+     *
+     *
+     * @param {string} name
+     * @memberof PeerManager
+     */
+    isExistPeer(name) {
+        return Object.keys(this.peers).some(key => this.peers[key].name == name);
     }
     /**
      *
@@ -29,7 +43,7 @@ class PeerManager {
      */
     addPeer(socketId, peer) {
         // 直接覆蓋
-        this.socketDict[socketId] = peer;
+        this.peers[socketId] = peer;
         this.socketLength++;
         return peer;
     }
@@ -42,11 +56,12 @@ class PeerManager {
      * @memberof PlayerManager
      */
     removePeer(socketId) {
-        if (this.socketDict[socketId]) {
-            delete this.socketDict[socketId];
+        if (this.peers[socketId]) {
+            delete this.peers[socketId];
             this.socketLength--
         }
-        return socketId in this.socketDict;
+        console.log(Object.keys(this.peers).length);
+        return socketId in this.peers;
     }
 
     /**
@@ -57,10 +72,29 @@ class PeerManager {
      * @memberof PlayerManager
      */
     getPeer(socketId) {
-        return this.socketDict[socketId];
+        return this.peers[socketId];
     }
 
+    /**
+     *
+     *
+     * @param {{name:string}} data
+     * @memberof PeerManager
+     */
+    userJoin(data) {
+        data.userCount = Object.keys(this.peers).length;
+        this.io.to('chat').emit('userJoin', data);
+    }
 
+    /**
+     *
+     *
+     * @param {{from:string,msg:string}} data
+     * @memberof PeerManager
+     */
+    sendMsg(data) {
+        this.io.to('chat').emit('receiveMsg', data);
+    }
 }
 
 module.exports = PeerManager;

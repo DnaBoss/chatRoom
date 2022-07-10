@@ -12,6 +12,7 @@ socket.on('login', data => {
     console.log(`${data.msg} 進來了`);
     socket.emit('chat', { msg: 'hi all, i am stranger' });
 })
+socket.on('loginFail', data => console.log('登入失敗，請換個名字試試'));
 
 socket.on(`channel:stranger`, data => {
     console.log(' stranger 您在短時間進行了過多操作，請稍微休一下');

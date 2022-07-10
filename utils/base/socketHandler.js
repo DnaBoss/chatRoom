@@ -40,8 +40,8 @@ class SocketHandler {
     start() {
         io.use((socket, next) => {
             // TODO:should verify socket here
-            socket.name = socket.handshake.query.name;
-            socket.userId = socket.handshake.query.userId;
+            // socket.name = socket.handshake.query.name;
+            // socket.userId = socket.handshake.query.userId;
             next();
         }).on('connect', this.connect.bind(this));
     }
@@ -64,29 +64,32 @@ class SocketHandler {
         // 註冊各個事件
         socket.on("login", data => this.login.bind(this)(socket, data));
         socket.on("disconnect", _ => this.disconnect.bind(this)(socket));
-        socket.on("chat", data => this.chat.bind(this)(socket, data));
+        socket.on("sendMsg", data => this.sendMsg.bind(this)(socket, data));
         socket.on("broadcast", data => this.broadcast.bind(this)(socket, data));
         socket.on("whisper", data => this.whisper.bind(this)(socket, data));
     }
 
-    login(socket) {
+    login(socket, data) {
         // 告知聊天室內的使用者，有人進來了
         const id = socket.id;
-        const name = socket.name;
+        if (!this.lobby.isLegalFrequency(id)) {
+            return this.lobby.sendIllegalMsg(id);
+        }
+        const name = data.name;
+        socket.name = name;
         this.lobby.login(id, name);
     }
 
-    chat(socket, data) {
+    sendMsg(socket, data) {
         const id = socket.id;
         if (!this.lobby.isLegalFrequency(id)) {
             return this.lobby.sendIllegalMsg(id);
         }
 
         // 發送聊天訊息
-        const from = socket.name;
         const msg = data.msg;
         // TODO: 可以設計成多房間，需再多加 room id 為參數
-        this.lobby.chat(id, from, msg);
+        this.lobby.sendMsg(id, msg);
     }
 
     broadcast(socket, data) {

@@ -15,17 +15,38 @@ class PeerBase {
     action() {
         this.timestamps.push(Date.now());
     }
-
+    /**
+     *
+     *
+     * @param {{name:string}} data
+     * @memberof PeerBase
+     */
     login(data) {
-        this.service.emit('login', data);
+        this.name = data.name;
+        this.service.emit('loginSuccess', data);
     }
 
-    chat(data) {
-        this.service.to('chat').emit('chat', data);
+
+    /**
+     *
+     *
+     * @param {{name:string}} data
+     * @memberof PeerBase
+     */
+    userJoin(data) {
+        this.service.to('chat').emit('userJoin', data);
     }
 
-    sendIllegalMsg(userId) {
-        this.service.emit(`channel:${userId}`);
+    sendMsg(data) {
+        this.service.to('chat').emit('receiveMsg', data);
+    }
+
+    sendIllegalMsg(name) {
+        this.service.emit(`channel:${name}`);
+    }
+
+    sendIllegalName() {
+        this.service.emit(`loginFail`);
     }
 
     clearTimestamps() {
