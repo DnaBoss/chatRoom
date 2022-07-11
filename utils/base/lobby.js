@@ -1,5 +1,5 @@
 const { io } = require("../../io/server");
-const PeerBase = require("./peerbase");
+const PeerBase = require("./peerBase");
 const PeerManager = require('./peerManager');
 
 class Lobby {
