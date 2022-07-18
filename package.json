@@ -3,17 +3,23 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node ./bin/www",
+    "test": "mocha test/**/*.test.js"
   },
+  
   "dependencies": {
     "@types/socket.io": "^3.0.2",
+    "chai": "^4.3.6",
     "cookie-parser": "~1.4.4",
     "cors": "^2.8.5",
     "debug": "~2.6.9",
+    "expect": "^28.1.1",
     "express": "~4.16.1",
     "http-errors": "~1.6.3",
     "i": "^0.3.7",
     "jquery": "^3.6.0",
+    "mocha": "^10.0.0",
+    "mock-socket": "^9.1.5",
     "morgan": "~1.9.1",
     "npm": "^8.13.2",
     "pug": "^3.0.2",

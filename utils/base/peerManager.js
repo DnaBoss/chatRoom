@@ -1,4 +1,4 @@
-const PeerBase = require('./peerbase');
+const PeerBase = require('./peerBase');
 
 class PeerManager {
     /**
@@ -42,7 +42,6 @@ class PeerManager {
      * @memberof PeerBase
      */
     addPeer(socketId, peer) {
-        // 直接覆蓋
         this.peers[socketId] = peer;
         this.socketLength++;
         return peer;

@@ -15,6 +15,7 @@ class Lobby {
     static create() {
         return new Lobby(PeerManager.getInstance(io));
     }
+
     /**
      *
      *
@@ -45,8 +46,8 @@ class Lobby {
      */
     isLegalFrequency(socketId) {
         const peer = this.peerManager.getPeer(socketId);
-        peer.action();
-        return peer.isLegalFrequency();
+        let now = Date.now();
+        return peer.isLegalFrequency(now);
     }
 
     /**
@@ -61,9 +62,8 @@ class Lobby {
         if (this.peerManager.isExistPeer(name)) {
             return peer.sendIllegalName();
         }
-        const data = { name };
+        const data = { name, id: socketId };
         peer.login(data)
-        // peer.userJoin(data);
         this.peerManager.userJoin(data);
     }
 
@@ -77,9 +77,8 @@ class Lobby {
      */
     sendMsg(socketId, msg) {
         const peer = this.peerManager.getPeer(socketId);
-        const data = { from: peer.name, msg };
+        const data = { id: socketId, from: peer.name, msg };
         this.peerManager.sendMsg(data);
-        // peer.sendMsg(data);
     }
 
     /**
@@ -94,7 +93,7 @@ class Lobby {
     }
 
     broadcast() {
-        // TODO:待實作
+        // TODO:need implement
     }
 
     /**

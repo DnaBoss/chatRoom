@@ -1,5 +1,5 @@
 {
-    "actionUpperBound": 5,
-    "limitMilliseconds": 5000,
+    "actionUpperBound": 60,
+    "limitMilliseconds": 60000,
     "port": 3310
 }

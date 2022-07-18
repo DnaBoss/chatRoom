@@ -12,9 +12,16 @@ class PeerBase {
         this.clearTimestamps();
     }
 
-    action() {
-        this.timestamps.push(Date.now());
+    /**
+     *
+     * add one legal request record
+     * @param {number} now
+     * @memberof PeerBase
+     */
+    action(now) {
+        this.timestamps.push(now);
     }
+
     /**
      *
      *
@@ -65,21 +72,22 @@ class PeerBase {
      * @return {boolean} 
      * @memberof PeerBase
      */
-    isLegalFrequency() {
-        let ret = true
+    isLegalFrequency(now) {
         if (this.timestamps.length < this.actionUpperBound) {
-            return ret;
+            this.action(now);
+            return true;
         }
-        // 確保 timestamps 的邊界 與 actionUpperBound 一致
+        // ensure the first request in limit time
+        if (now - this.timestamps[0] < this.limitMilliseconds) {
+            return false;
+        }
+
+        this.action(now);
+        // let new request timestamp replace oldest request timestamp
         while (this.timestamps.length > this.actionUpperBound) {
             this.timestamps.shift();
         }
-
-        if (this.timestamps[0] - this.timestamps[this.actionUpperBound - 1] < this.limitMilliseconds) {
-            ret = false;
-        }
-
-        return ret
+        return true;
     }
 
     /**
