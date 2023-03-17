@@ -23,12 +23,6 @@
 ---
 
 # 4. impression:
-    when i start the interesting test,
-    but i did not do that in the end,
-    because scrutinize require and what i     really want to show you.
-
-    I thing it has three main parts
-
     1. Coding Style 
     2. Coding Habit
     3. Can i have master the programming language of javscript
@@ -67,9 +61,8 @@
 
 # 7. Others:
     I totally spend 9 to 10 hours
-    in this test, it has three main parts
-    
+    in this project, it has three main parts
+   
     1. Thinking require and design,2 hours
     2. server side coding 3 hour
     3. client side coding 4 to 5 hours
-    It because i don't have any  experience of front end so i estimate not precise at this part.
