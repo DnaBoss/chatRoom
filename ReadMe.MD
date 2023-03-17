@@ -1,36 +1,68 @@
-# The inline Chat App Test+
 
-I'd like to ask you to solve a challenge. This is a small test that every technical candidate with inline goes through.
-
-### The Challenge
-
-Create a simple chat app, and chat with me through your app.
-
-### The Constraints
-
-* The chat messages must be delivered in realtime
-* The chat media is up to you (_we suggest text, but audio or video or finger-drawings or emojis or haptic "morse code taps" etc are fine_)
-* The client can be created in any environment you'd like to use (web, native, hybrid, or anything else _except Windows_)
-* The chat service can be created in any platform and language you'd like to use
-* You may use any open source or closed source libraries, hosted services, or sample code (_technical originality is not important to us_)
-* The functional scope and UI details are up to you, but please be aware that UX is an important aspect we will be judging
-* The chat client(s) must connect to a service that is live, so that we can actually chat
+# 1. app url :
+    *  http://lb-486731550.ap-southeast-1.elb.amazonaws.com/chat
 
 
-### The Delivery
+---
 
-* Estimate the number of hours you expect to spend on this _before_ you begin to write code
-* Write your code in a new branch of the private GitHub repo you've been added to
-* When you're ready, submit a pull request that includes how long you actually spent vs your estimate and a URL to access the live chat client
-* Notify me of your PR by sending me a message/email or assigning me as a reviewer
-* Then I'll review your code and we'll chat through your app!
-
-
-### The Attack
-
-* After you submit your chat app there will be an attack on your deployed app.
-* The attack will include between 1 and 10,000 malicious requests.
-* You will need to identify the details of the attack and block any future similar attacks.
+# 2. config : 
+    * limitMilliseconds => in the time intervals limit socket event request time
+    * actionUpperBound =>in the time intervals of limitMilliseconds, user action upper bound
+    * prot => server port
 
 
-This shouldn't take more than a day, but it will probably take more than one hour. This is, in truth, a quite trivial technical challenge (_ie there are many readily available solutions to choose from that can deliver a solution in less than one hour of total work_). But there are dimensions to the decisions you make in the test that are quite valuable for the purposes of generating signals that can let inline understand how you think, and what skills and knowledge you possess.
+---
+
+# 3. class :
+     socketHandler => listen socket event and parse client side data then assign to lobby
+     lobby => acording to socket event, opertion peer
+     peerManager => basic manager of peer
+     peer => keep socket and user data in memory
+
+
+---
+
+# 4. impression:
+    1. Coding Style 
+    2. Coding Habit
+    3. Can i have master the programming language of javscript
+
+---
+
+# 5. How to start at local:
+
+    server side start step
+
+    $ npm install
+    $ node main.js
+
+    http://127.0.0.1:3310/chat
+
+
+---
+# 6. How to test:
+
+
+    cd testClient
+    $ npm install
+    $ node chatClientCash.js
+
+    it can test limit request time function
+
+
+
+---
+# 7. Unit test:
+
+    $ npm mocha -g
+    $ npm test
+
+---
+
+# 7. Others:
+    I totally spend 9 to 10 hours
+    in this project, it has three main parts
+   
+    1. Thinking require and design,2 hours
+    2. server side coding 3 hour
+    3. client side coding 4 to 5 hours
